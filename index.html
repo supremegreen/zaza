@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mobile Video Background</title>
+
+    <style>
+      /* RESET */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+
+      body {
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      /* VIDEO BACKGROUND */
+      .video-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+      }
+
+      .video-bg video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+      }
+
+      /* OVERLAY CONTENT */
+      .overlay {
+        position: relative;
+        z-index: 2;
+        height: 100vh;
+        width: 100%;
+        max-width: 420px;
+        margin: 0 auto;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        padding: 24px;
+      }
+
+      /* CENTER IMAGE */
+      .center-image {
+        width: 70%;
+        max-width: 240px;
+        margin-bottom: 20px;
+      }
+
+      /* TEXT BOX */
+      .text-box {
+        width: 100%;
+        background: rgba(0, 0, 0, 0.65);
+        color: #ffffff;
+        padding: 20px;
+        border-radius: 14px;
+        border: 1px solid #ffffff;
+      }
+
+      .text-box h1 {
+        font-size: 22px;
+        margin-bottom: 10px;
+      }
+
+      .text-box p {
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      /* MOBILE ONLY */
+      @media (min-width: 768px) {
+        body {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- VIDEO BACKGROUND -->
+    <div class="video-bg">
+      <video autoplay muted playsinline preload="auto">
+        <source src="images/bgsmoke.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <!-- CONTENT ON TOP -->
+    <div class="overlay">
+      <img src="images/IMG_1309.png" alt="Center Image" class="center-image" />
+
+      <div class="text-box">
+        <h1>"478-765-5118"</h1>
+        <p>3.5s $15 / 7's $30 / Half's $60 / Zips $100</p>
+      </div>
+    </div>
+
+    <!-- FORCE LOOP FOR iOS -->
+    <script>
+      const video = document.querySelector('.video-bg video')
+
+      video.addEventListener('ended', () => {
+        video.currentTime = 0
+        video.play()
+      })
+    </script>
+  </body>
+</html>
