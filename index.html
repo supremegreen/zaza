@@ -16,8 +16,9 @@
 
       body {
         width: 100%;
-        height: 100vh;
-        overflow: hidden;
+        min-height: 100vh;
+        background: #000;
+        overflow-x: hidden;
       }
 
       /* VIDEO BACKGROUND */
@@ -27,7 +28,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: -1;
+        z-index: 1;
         overflow: hidden;
       }
 
@@ -41,57 +42,61 @@
         pointer-events: none;
       }
 
-      /* OVERLAY CONTENT */
-      .overlay {
+      /* WRAPPER TO ALLOW SCROLLING IF MULTIPLE CARDS EXIST */
+      .content-wrapper {
         position: relative;
         z-index: 2;
-        height: 100vh;
         width: 100%;
         max-width: 420px;
         margin: 0 auto;
+        padding: 24px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+      }
 
+      /* CARD / OVERLAY SECTION */
+      .overlay {
+        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         text-align: center;
-
-        padding: 24px;
       }
 
       /* CENTER IMAGE */
-.center-image {
-  width: 120%;          /* Changed from 70% */
-  height: auto;        /* Preserves natural aspect ratio */
-  margin-bottom: 20px;
-  border-radius: 12px;
-}
+      .center-image {
+        width: 100%;
+        max-width: 360px;
+        height: auto;
+        margin-bottom: 20px;
+        border-radius: 12px;
+        object-fit: contain;
+      }
 
       /* TEXT BOX */
       .text-box {
         width: 100%;
-        background: rgba(0, 0, 0, 0.65);
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
         color: #ffffff;
         padding: 20px;
         border-radius: 14px;
-        border: 1px solid #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
       }
 
       .text-box h1 {
         font-size: 22px;
         margin-bottom: 10px;
+        letter-spacing: 0.5px;
       }
 
       .text-box p {
         font-size: 16px;
         line-height: 1.5;
-      }
-
-      /* MOBILE ONLY */
-      @media (min-width: 768px) {
-        body {
-          display: none;
-        }
+        font-weight: 500;
       }
     </style>
   </head>
@@ -99,29 +104,41 @@
   <body>
     <!-- VIDEO BACKGROUND -->
     <div class="video-bg">
-      <video autoplay muted playsinline preload="auto">
+      <video autoplay muted playsinline loop preload="auto">
         <source src="images/bgsmoke.mp4" type="video/mp4" />
       </video>
     </div>
 
-    <!-- CONTENT ON TOP -->
-    <div class="overlay">
-      <img src="images/candy.png" alt="Center Image" class="center-image" />
+    <!-- MAIN SCROLLABLE CONTENT -->
+    <main class="content-wrapper">
+      <!-- ITEM 1 -->
+      <section class="overlay">
+        <img src="images/invaded.png" alt="Invaded" class="center-image" />
+        <div class="text-box">
+          <h1>478-765-5118</h1>
+          <p>3.5s $15 / 7's $30 / Half's $60 / Zips $100</p>
+        </div>
+      </section>
 
-      <div class="text-box">
-        <h1>"478-765-5118"</h1>
-        <p>3.5s $15 / 7's $30 / Half's $60 / Zips $100</p>
-      </div>
-    </div>
+      <!-- ITEM 2 -->
+      <section class="overlay">
+        <img src="images/candy.png" alt="Candy" class="center-image" />
+        <div class="text-box">
+          <h1>478-765-5118</h1>
+          <p>3.5s $20 / 7's $40 / Half's $70 / Zips $130</p>
+        </div>
+      </section>
+    </main>
 
-    <!-- FORCE LOOP FOR iOS -->
+    <!-- BACKUP LOOP SCRIPT FOR OLDER MOBILE BROWSERS -->
     <script>
-      const video = document.querySelector('.video-bg video')
-
-      video.addEventListener('ended', () => {
-        video.currentTime = 0
-        video.play()
-      })
+      const video = document.querySelector('.video-bg video');
+      if (video) {
+        video.addEventListener('ended', () => {
+          video.currentTime = 0;
+          video.play();
+        });
+      }
     </script>
   </body>
 </html>
